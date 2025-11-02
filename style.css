@@ -1,0 +1,77 @@
+/* Reset Básico */
+body {
+    margin: 0;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
+}
+
+/* Contêiner principal do jogo */
+#game-container {
+    width: 800px; 
+    height: 600px; 
+    position: relative;
+    overflow: hidden; 
+    border: 4px solid #1a1a1a;
+}
+
+/* O mundo do jogo: Define o tamanho do fundo */
+#game-world {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-size: cover; /* Faz a imagem cobrir todo o contêiner */
+    background-position: center bottom; /* Foca na parte de baixo do fundo */
+    image-rendering: pixelated;
+}
+
+/* Classes para trocar o cenário (Casa Trancada/Destrancada) */
+#game-world.locked {
+    /* Usaremos a imagem de fundo com a casa trancada */
+    background-image: url('assets/casa.png');
+}
+
+#game-world.unlocked {
+    /* Usaremos a imagem de fundo com a casa destrancada */
+    /* Você pode escolher entre casa-unlocked.png ou casa.png aqui */
+    background-image: url('assets/casa.png');
+}
+
+
+/* Estilo para o Panda (personagem) */
+#panda {
+    position: absolute;
+    width: 100px; /* Ajustei para um tamanho que funcione com o seu pixel art */
+    height: auto;
+    /* Posição vertical: precisa ser ajustada para o 'chão' */
+    bottom: 90px; 
+    left: 100px; 
+    transform: scaleX(1); 
+    image-rendering: pixelated;
+    transition: left 0.2s linear; /* Movimento suave */
+}
+
+/* CONTROLES */
+#controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.control-button img {
+    width: 80px; /* Tamanho ajustável para o controle */
+    height: auto;
+    image-rendering: pixelated;
+    transition: transform 0.05s ease;
+}

@@ -11,6 +11,7 @@ let pandaPositionX = 100;
 const movementSpeed = 20; 
 let currentFrame = 1; 
 let isLocked = true; // Começa trancado
+let rfidScanned = false; //scan do sensor
 let animationInterval; 
 const maxGameWidth = 800;
 
@@ -90,15 +91,15 @@ function checkHouseInteraction() {
     if (pandaCenter > houseInteractionAreaStart) {
         // O panda chegou na área da casa!
 
-        if (isLocked) {
-            // Destranca: remove a classe 'locked' e adiciona 'unlocked'
+        // DESTANCA SOMENTE se a casa estiver trancada E a tag RFID tiver sido lida
+        if (isLocked && rfidScanned) {
             gameWorld.classList.remove('locked');
             gameWorld.classList.add('unlocked');
             isLocked = false;
-            console.log("Casa destrancada! Você venceu!");
+            console.log("Casa destrancada! Você venceu com RFID!");
         }
-
-    } else {
+    } 
+    else {
         // O panda se afastou da casa
         // Se quisermos que ele volte a ficar trancado ao afastar (opcional)
         // if (!isLocked) {
@@ -153,6 +154,16 @@ function setupControls(button, buttonImg, direction) {
     button.addEventListener('touchend', stopAction);
 }
 
+// FUNÇÃO GLOBAL: Chamada pela conexão Serial quando a tag RFID é lida
+function rfidUnlockTag() {
+    if (!rfidScanned) {
+        rfidScanned = true;
+        console.log("TAG RFID LIDA! Tentando destrancar...");
+        // Verifica a interação do personagem com a casa imediatamente após a leitura
+        checkHouseInteraction();
+    }
+}
+
 // Configura os controles
 setupControls(arrowLeft, arrowLeftImg, 'left');
 setupControls(arrowRight, arrowRightImg, 'right');
@@ -176,4 +187,5 @@ document.addEventListener('keyup', (e) => {
 
 // Inicializa o estado do mundo como trancado ao carregar a página
 gameWorld.classList.add('locked');
+
 
